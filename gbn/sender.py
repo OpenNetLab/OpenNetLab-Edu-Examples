@@ -1,12 +1,12 @@
 from typing import Deque
 from collections import deque
 from onl.packet import Packet
-from onl.device import Device, OutMixIn
+from onl.device import SingleDevice
 from onl.sim import Environment, Store
 from onl.utils import Timer
 
 
-class GBNSender(Device, OutMixIn):
+class GBNSender(SingleDevice):
     def __init__(
         self,
         env: Environment,

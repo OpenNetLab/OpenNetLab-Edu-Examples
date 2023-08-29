@@ -54,31 +54,28 @@ class GBNSender(Device, OutMixIn):
         self.out.put(packet)
 
     def run(self, env: Environment):
-
-        """
-        TODO: 
-        （1）检查滑动窗口是否已满，来产生分组并发送（发送滑动窗口内所有可以发送的分组）
-        （2）每发送一个分组，保存该分组在缓冲区中，表示已发送但还未被确认
-        （3）记得在规定的时机重置定时器: self.timer.restart(self.timeout)
-        """
-
-        """
-        通过`self.finish_channel.get()`获取状态
-        即当`self.finish_channel.put(True)`时发送端模拟结束
-        """
         yield self.finish_channel.get()
 
     def put(self, packet: Packet):
-        """从接收端收到ACK"""
-        ackno = packet.packet_id
-
-        """
+        """从接收端收到ACK
         TODO: 
         （1）检查收到的ACK
         （2）采取累积确认，移动滑动窗口，并发送接下来可以发送的分组
         （3）重置定时器: self.timer.restart(self.timeout)
         （4）检查是否发送完message，若发送完毕则告知结束: self.finish_channel.put(True)
         """
+        ackno = packet.packet_id
+
+    def send_available(self):
+        """
+        TODO: 
+        （1）检查滑动窗口是否已满，来产生分组并发送（发送滑动窗口内所有可以发送的分组）
+        （2）每发送一个分组，保存该分组在缓冲区中，表示已发送但还未被确认
+        （3）记得在规定的时机重置定时器: self.timer.restart(self.timeout)
+        通过`self.finish_channel.get()`获取状态
+        即当`self.finish_channel.put(True)`时发送端模拟结束
+        """
+        pass
     
     def timeout_callback(self):
         self.dprint("timeout")

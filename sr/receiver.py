@@ -1,12 +1,10 @@
-import json
-from pathlib import Path
 from typing import Optional, List
 from onl.packet import Packet
-from onl.device import Device, OutMixIn
+from onl.device import SingleDevice
 from onl.sim import Environment
 
 
-class SRReceiver(Device, OutMixIn):
+class SRReceiver(SingleDevice):
     def __init__(
         self,
         env: Environment,

@@ -1,5 +1,6 @@
 import socket
 from typing import List, Dict
+from os.path import abspath, dirname, join
 
 from onl.device import UDPDevice
 from onl.sim import Environment, ProcessGenerator, Store
@@ -13,7 +14,7 @@ class DNSServer(UDPDevice):
         self.env = env
         # map url to ip address
         self.url_ip: Dict[str, str] = dict()
-        with open("./ipconf.txt", "r", encoding="utf-8") as f:
+        with open(join(dirname(abspath(__file__)), "ipconf.txt"), "r", encoding="utf-8") as f:
             for line in f:
                 ip, name = line.split(" ")
                 self.url_ip[name.strip("\n")] = ip
